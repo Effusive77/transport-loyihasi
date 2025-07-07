@@ -22,9 +22,9 @@ class MoreInfo(Car):
         super().show_info()
         print(f'Mashina rangi: {self.color}\nMashina haydovchisi: {self.driver}\nMashina raqami: {self.__carID}')
     
-class DriveCar(Car, MoreInfo):
-    def __init__(self, name, maxspeed, minspeed, acceleration, deceleration):
-        super().__init__(name, model, year, driver, carID, color)
+class DriveCar(MoreInfo):
+    def __init__(self, maxspeed, minspeed, acceleration, deceleration, driver):
+        self.driver = driver
         self.deceleration = deceleration
         self.acceleration = acceleration
         self.maxspeed = maxspeed
@@ -32,10 +32,10 @@ class DriveCar(Car, MoreInfo):
         self.speed_start = 0
 
     def startcar(self):
-        print(f'{self.driver}, sizning avtomobilingiz o\'t oldi')
+        print(f'\n{self.driver}, sizning avtomobilingiz o\'t oldi')
 
     def stopcar(self):
-        print(f'{self.driver}, sizning avtomobilingiz to\'xtadi')
+        print(f'\n{self.driver}, sizning avtomobilingiz to\'xtadi')
 
     def accelerate(self):
         while self.speed_start < self.maxspeed:
@@ -54,20 +54,20 @@ class DriveCar(Car, MoreInfo):
                 break
 
     def turnright(self):
-        print('Mashina o\'ngga burildi')
+        print('\nMashina o\'ngga burildi')
 
     def turnleft(self):
-        print('Mashina chapga burildi')
+        print('\nMashina chapga burildi')
 
 while True:
-    name = input('Mashina nomini kiriting: ')
+    name = input('\nMashina nomini kiriting: ')
     model = input('Mashina modelini kiriting: ')
     year = int(input('Mashina yilini kiriting: '))
     color = input('Mashina rangini kiriting: ')
     driver = input('Ism familiyangizni kiriting: ')
     carID = input('Mashina raqamini kiriting: ')
     
-    print(f'\nMashinangiz tizimga muvaffaqiyatli qo\'shildi, {name}')
+    print(f'\nMashinangiz tizimga muvaffaqiyatli qo\'shildi, {driver}')
 
     haydovchi = MoreInfo(name, model, year, color, driver, carID)
     haydovchi.show_info()
@@ -76,12 +76,13 @@ while True:
 
     sys('cls')
 
+    driver = driver
     maxspeed = 0
     minspeed = 0
     acceleration = 0
     deceleration = 0
 
-    haydash = DriveCar(name, maxspeed, minspeed, acceleration, deceleration)
+    haydash = DriveCar(maxspeed, minspeed, acceleration, deceleration, driver)
 
     start = input('Mashina ishga tushirilsinmi?(h/y): ')
     if start.lower() == 'h':
@@ -89,13 +90,13 @@ while True:
         while True:
             choice = input('\nTanlovingizning raqamini kiriting: \n1. Tezlikni oshirish\n2. Tezlikni kamaytirish\n3. O\'ngga burish\n4. Chapga burish\n5. Mashinani to\'xtatish\n\n>>>>> ')
             if choice == '1':
-                maxspeed = int(input('Tezlik chegarasini kiriting: '))
+                maxspeed = int(input('\nTezlik chegarasini kiriting: '))
                 acceleration = int(input('Tezlanishni kiriting: '))
                 haydash.maxspeed = maxspeed
                 haydash.acceleration = acceleration
                 haydash.accelerate()
             if choice == '2':
-                minspeed = int(input('Tezlik chegarasini kiriting: '))
+                minspeed = int(input('\nTezlik chegarasini kiriting: '))
                 deceleration = int(input('Sekinlanish tezligini kiriting: '))
                 haydash.minspeed = minspeed
                 haydash.deceleration = deceleration
@@ -107,7 +108,7 @@ while True:
             if choice == '5':
                 haydash.stopcar()
 
-            Continue = input('Boshqa amal bajarishni xohlaysizmi?(h/y): ')
+            Continue = input('\nBoshqa amal bajarishni xohlaysizmi?(h/y): ')
             if Continue.lower() != 'h':
                 break
 
